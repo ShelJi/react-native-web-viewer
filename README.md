@@ -1,8 +1,8 @@
-# Welcome to your Expo app 👋
+# Foxtech
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Attendance manager — an [Expo](https://expo.dev) app that runs a website ([app/index.tsx](app/index.tsx)) inside a native WebView shell.
 
-## Get started
+## Running the app (development)
 
 1. Install dependencies
 
@@ -10,41 +10,54 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Start the dev server
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+   In the terminal output, press `a` for an [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/), `i` for an [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/), `w` for web, or scan the QR code with [Expo Go](https://expo.dev/go) on a physical device.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   Shortcuts for the same targets:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+   ```bash
+   npm run android   # expo run:android — builds and launches on a connected device/emulator
+   npm run ios       # expo run:ios     — builds and launches on a simulator/device (macOS only)
+   npm run web       # expo start --web
+   ```
 
-## Get a fresh project
+The screen the app shows lives in [app/index.tsx](app/index.tsx) — change `SITE_URL` there to point the WebView at a different site.
 
-When you're ready, run:
+## Building a standalone (offline) app
+
+The dev server (`expo start`) and Expo Go are only needed while developing — for real-world use you build a standalone `.apk`/`.aab` (Android) or `.ipa` (iOS) that installs and launches on its own, no dev server or Expo account required at runtime. There are two ways to produce one:
+
+### Option A — Local build (fully offline, no Expo account)
+
+Requires the native toolchain installed on your machine: [Android Studio + SDK](https://docs.expo.dev/workflow/android-studio-emulator/) for Android, or Xcode (macOS only) for iOS.
 
 ```bash
-npm run reset-project
+npx expo run:android --variant release   # outputs an installable .apk
+npx expo run:ios --configuration Release # macOS only
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+The first run generates the native `android`/`ios` projects (`expo prebuild`) and builds with Gradle/Xcode directly on your machine — nothing is uploaded anywhere. The release APK is written under `android/app/build/outputs/apk/release/`. It isn't code-signed for the Play Store, but it installs fine via `adb install` or by copying the file to a device.
+
+### Option B — EAS Build (cloud, no local Android/Xcode setup needed)
+
+```bash
+npm install --global eas-cli
+eas login
+eas build:configure          # first time only — creates eas.json
+eas build --platform android # or ios / all
+```
+
+This builds on Expo's servers and gives you a downloadable `.apk`/`.aab`/`.ipa`. (`eas build --local` runs the same process on your own machine instead, but it isn't officially supported on Windows — use WSL, macOS, or Linux for that path.)
+
+> **Note:** "offline build" above refers to the build/packaging step, not the app's runtime behavior — since this app displays a remote website in a WebView, the device still needs an internet connection to load that site once installed.
 
 ## Learn more
 
-To learn more about developing your project with Expo, look at the following resources:
-
 - [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [EAS Build](https://docs.expo.dev/build/introduction/): Full reference for cloud and local builds.
+- [react-native-webview](https://github.com/react-native-webview/react-native-webview): Docs for the WebView component this app is built around.
