@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Attendance manager",
-    "slug": "attendance-manager",
-    "description": "Attendance manager",
+    "name": "Shelj",
+    "slug": "shelj",
+    "description": "Personal Portfolio Shelj",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

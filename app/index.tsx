@@ -28,7 +28,7 @@ import {
   WebViewHttpErrorEvent,
 } from 'react-native-webview/lib/WebViewTypes';
 
-const SITE_URL = 'https://s.plsofttech.com/web/dashboard';
+const SITE_URL = 'https://shelj.in';
 
 export default function App() {
   const webViewRef = useRef<WebView>(null);
