@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Shelj",
-    "slug": "shelj",
+    "name": "Attendance manager",
+    "slug": "attendance-manager",
     "description": "Attendance manager",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,7 +10,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "android": {
-      "package": "com.foxtech.shelj",
+      "package": "com.pl.shelj",
       "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
